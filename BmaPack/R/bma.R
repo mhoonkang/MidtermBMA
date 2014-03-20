@@ -40,3 +40,29 @@ setMethod("initialize", "bma", function(.Object, ...){
   return(value)
 }
 )
+
+#' @export        
+setMethod("print","bma",
+          function(x, ...){
+            for(i in 1:ncol(x@coefficient)){
+              cat("coefficients (",colnames(x@coefficient)[i],"): \n",sep="")
+              output <- x@coefficient[,i][!is.na(x@coefficient[,i])]
+              names(output) <- rownames(x@coefficient)[!is.na(x@coefficient[,i])]
+              print(round(output,7))
+              cat("R-squared:", round(x@R.squared[i],7),"\n")
+              cat("The Posterior model odds:", round(x@posterior.odds[i],7),"\n\n")
+            }
+            cat("The expected value of each coefficient: \n")
+            print(round(x@expected.coeff,7))
+            cat("\n")
+            cat("The posterior probability that the coefficient is non-zero: \n")
+            print(round(x@posterior.prob,7))
+          }
+)
+
+
+#' @export 
+setMethod("show","bma", 
+          function(object){
+            print(object)
+          })
