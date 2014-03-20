@@ -16,3 +16,27 @@
 #' @aliases bma-class initialize, bma-method summary, bma-method plot, bma-method show, bma-method print, bma-method
 #' @rdname bma
 #' @export
+setClass(Class="bma",  
+         representation=representation(
+           coefficient="matrix",
+           R.squared="numeric",
+           posterior.odds = "numeric",
+           expected.coeff = "numeric",
+           posterior.prob = "numeric"
+         ),
+         prototype=prototype(
+           coefficient = matrix(),
+           R.squared = numeric(),
+           posterior.odds =  numeric(),
+           expected.coeff = numeric(),
+           posterior.prob = numeric()
+         )
+)
+
+#' @export
+setMethod("initialize", "bma", function(.Object, ...){ 
+  value=callNextMethod()
+  validObject(value)
+  return(value)
+}
+)

@@ -19,19 +19,83 @@
 #' 
 #' # Create a random 10 by 5 covariate matrix
 #' x <- matrix(rnorm(50,0,1),10,5)
-#' 
 #' # Create a vector of the values for the dependent variable
 #' y <- 2+1.2*x[,1]+2.2*x[,2]+0.2*x[,3]+3.2*x[,4]+1.8*x[,5]+rnorm(10,0,3)
-#' 
 #' # Create a a vector of the regression coefficients priors
 #' g <- 3
-#' 
 #' # run fitBMA function
-#' a <- fitBMA(x=x,y=y,g=g)
-#' a
-#' 
-#' # plot the expected value of each coefficient and the posterior probability that the coefficient is non-zero.
-#' plot(a)
+#' fitBMA(x=x,y=y,g=g)
 #' @rdname fitBMA
 #' @aliases fitBMA,ANY-method
 #' @export
+setGeneric(name="fitBMA", 
+           function(x,y,g,...){
+             standardGeneric("fitBMA")
+            }
+           )
+
+#' @export
+setMethod(f="fitBMA", signature(x="matrix", y="numeric", g="numeric"), 
+          definition=function(x,y,g){
+            n <- nrow(x)
+            k <- ncol(x)
+            if(k==1) stop("the number of covariates should be greater than or equal to 2")
+            one <- rep(1,n) 
+            M <- one%*%solve(t(one)%*%one)%*%t(one) 
+            if(is.null(colnames(x))) colnames(x) <- paste("x",1:k,sep="") 
+            covariate.names <- colnames(x)
+            sx <- apply(x, 2, function(x) (x-mean(x))/sd(x))
+            sy <- (y-mean(y))/sd(y) 
+            combi <- lapply(1:k, function(i) combn(k,i))
+            beta <- sapply(1:k, function(i){ 
+              sapply(1:ncol(combi[[i]]), function(j){
+                solve(t(sx[,combi[[i]][,j]])%*%sx[,combi[[i]][,j]])%*%t(sx[,combi[[i]][,j]])%*%sy
+              })
+            })
+            R.squared <- sapply(1:k, function(i){ 
+              sapply(1:ncol(combi[[i]]), function(j){
+                (t(sy)%*%sx[,combi[[i]][,j]]%*%solve(t(sx[,combi[[i]][,j]])%*%sx[,combi[[i]][,j]])%*%t(sx[,combi[[i]][,j]])%*%sy-t(sy)%*%M%*%sy)/(t(sy)%*%sy-t(sy)%*%M%*%sy)
+              })
+            })
+            R.squared <- unlist(R.squared) 
+            
+            
+            combi <- sapply(1:k, function(i) matrix(as.vector(t(combi[[i]])), k, ncol(combi[[i]]), byrow=TRUE)) 
+            combi <- unlist(combi) 
+            combi <- matrix(combi, k)
+            beta[[1]] <- matrix(beta[[1]], 1, k, byrow=TRUE)
+            beta <- sapply(1:k, function(i) matrix(as.vector(t(beta[[i]])), k, ncol(beta[[i]]), byrow=TRUE)) 
+            beta <- unlist(beta) 
+            beta <- matrix(beta, k)
+            coeff.covariate <- NULL
+            for(i in 1:k){ 
+              for(j in 1:ncol(beta)){
+                temporary <- unique(beta[,j]*(combi[,j]==i))
+                coeff.covariate.new <- ifelse(length(temporary)>1, temporary[temporary!=0], temporary)
+                coeff.covariate <- c(coeff.covariate, coeff.covariate.new)
+              }
+            }
+            coeff.covariate <- matrix(coeff.covariate, k, ncol(beta), byrow=TRUE)
+            beta <- coeff.covariate
+            rownames(beta) <- covariate.names
+            colnames(beta) <- paste("Model",1:ncol(beta))
+            
+            B <- sapply(1:ncol(beta), function(i) (1+g)^((n-sum(beta[,i]!=0)-1)/2)*(1+g*(1-R.squared[i]))^(-(n-1)/2)) 
+            B.model0 <- 1
+            odds <- sapply(1:ncol(beta), function(i) B[i]/(sum(B)+B.model0))
+            names(odds) <- paste("Model",1:ncol(beta))
+
+            E <- (g/(g+1))*beta
+            expected.coeff <- as.numeric(odds %*% t(E))
+            names(expected.coeff) <- covariate.names
+            
+            beta.dummy <- ifelse(beta==0,0,1)
+            total.weight <- as.numeric(odds %*% t(beta.dummy))
+            names(total.weight) <- covariate.names
+            
+            names(R.squared) <- paste("Model",1:ncol(beta))
+            
+            beta[beta==0]<-NA 
+            
+            return(new("bma", coefficient=beta, R.squared=R.squared, posterior.odds=odds, expected.coeff=expected.coeff, posterior.prob=total.weight))
+          })
