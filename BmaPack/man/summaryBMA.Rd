@@ -2,12 +2,14 @@
 \alias{ANY-method}
 \alias{summaryBMA}
 \alias{summaryBMA,}
-\title{Summary the Object of '\code{bma}' Class}
+\title{Summarize the Object of '\code{bma}' Class}
 \usage{
 summaryBMA(x, ...)
 }
 \arguments{
   \item{x}{An object of '\code{bma}' class}
+  
+  \item{...}{Arguments to be passed to methods
 }
 \value{
 An object of '\code{sum.bma}' class with the elements
