@@ -16,4 +16,6 @@ collate:
     "bma.R"
     "BmaPack-package.R"
     "fitBMA.R"
-    "summary.bma.R"
+    "plot.BMA"
+    "sum.bma.R"
+    "summary.BMA.R"

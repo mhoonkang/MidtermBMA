@@ -18,7 +18,7 @@ a <- fitBMA(x,y,g)
 summary(a)
 plot(a)
 
-# check structure of bma class and summary.bma class
+# check structure of bma class and sum.bma class
 str(a)
 b <- summary(a)
 str(b)
