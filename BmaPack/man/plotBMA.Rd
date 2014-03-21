@@ -36,6 +36,6 @@ Myunghoon Kang \email{myunghoon@wustl.edu}
 \seealso{
 \code{\link{fitBMA}}
 
-\code{\link{summary.BMA}}
+\code{\link{summaryBMA}}
 }
 

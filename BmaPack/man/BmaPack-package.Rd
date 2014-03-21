@@ -22,8 +22,8 @@ Myunghoon Kang \email{myunghoon@wustl.edu}
 \seealso{
 \code{\link{fitBMA}}
 
-\code{\link{plot.BMA}}
+\code{\link{plotBMA}}
 
-\code{\link{summary.BMA}}
+\code{\link{summaryBMA}}
 }
 

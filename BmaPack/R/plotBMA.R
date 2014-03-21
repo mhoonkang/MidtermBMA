@@ -10,7 +10,7 @@
 #' \item{the posterior probability that the coefficient is non-zero}
 #' @author Myunghoon Kang \email{myunghoon@@wustl.edu}
 #' @seealso \code{\link{fitBMA}}
-#' @seealso \code{\link{summary.BMA}}
+#' @seealso \code{\link{summaryBMA}}
 #' @examples
 #' 
 #' # Create a random 10 by 5 covariate matrix

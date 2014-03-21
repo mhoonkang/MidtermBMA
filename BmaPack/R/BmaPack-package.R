@@ -5,8 +5,8 @@
 #' @docType package
 #' @author  Myunghoon Kang \email{myunghoon@@wustl.edu}
 #' @seealso \code{\link{fitBMA}}
-#' @seealso \code{\link{plot.BMA}}
-#' @seealso \code{\link{summary.BMA}}
+#' @seealso \code{\link{plotBMA}}
+#' @seealso \code{\link{summaryBMA}}
 #' @examples 
 #'
 #' \dontrun{
