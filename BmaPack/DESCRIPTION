@@ -12,10 +12,9 @@ Depends:
 License: GPL (>= 2)
 Suggests:
     devtools
-collate: 
-    "bma.R"
+collate: "bma.R"
     "BmaPack-package.R"
     "fitBMA.R"
-    "plot.BMA"
+    "plot.BMA.R"
     "sum.bma.R"
     "summary.BMA.R"
