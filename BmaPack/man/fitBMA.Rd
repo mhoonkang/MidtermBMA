@@ -50,8 +50,8 @@ fitBMA(x=x,y=y,g=3)
 Myunghoon Kang \email{myunghoon@wustl.edu}
 }
 \seealso{
-\code{\link{plot.BMA}}
+\code{\link{plotBMA}}
 
-\code{\link{summary.BMA}}
+\code{\link{summaryBMA}}
 }
 

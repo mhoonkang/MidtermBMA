@@ -66,3 +66,16 @@ setMethod("show","bma",
           function(object){
             print(object)
           })
+
+#' @export 
+setMethod("plot","bma", 
+          function(x,...){
+            object <- x
+            plotBMA(object)
+          })
+
+#' @export 
+setMethod("summary","bma", 
+          function(object){
+            summaryBMA(object)
+          })

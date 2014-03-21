@@ -1,3 +1,4 @@
+rm(list=ls())
 library(devtools)
 library(roxygen2)
 current.code <- as.package("BmaPack")
@@ -8,6 +9,8 @@ install(pkg=current.code, local=TRUE)
 # check help documents
 ?fitBMA
 ?BmaPack
+?plotBMA
+?summaryBMA
 
 # check function
 x <- matrix(rnorm(100,0,1),20,5)
