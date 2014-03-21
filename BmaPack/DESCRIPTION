@@ -1,0 +1,19 @@
+Package: BmaPack
+Type: Package
+Title: Bayesian Model Averaging
+Version: 1.0
+Date: 2014-03-19
+Author: Myunghoon Kang
+Maintainer: Myunghoon Kang <myunghoon@wustl.edu>
+Description: Package for Bayesian model averaging for linear models
+Depends:
+    R (>= 3.0.0),
+    methods
+License: GPL (>= 2)
+Suggests:
+    devtools
+collate: 
+    "bma.R"
+    "BmaPack-package.R"
+    "fitBMA.R"
+    "summary.bma.R"

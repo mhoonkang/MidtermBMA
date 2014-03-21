@@ -66,3 +66,23 @@ setMethod("show","bma",
           function(object){
             print(object)
           })
+
+#' @export
+setMethod("plot","bma", 
+          function(x){
+            X <- length(x@posterior.prob)
+            coefficient <- x@expected.coeff
+            prob <- x@posterior.prob
+            barplot(coefficient, ylim=c(ifelse(min(coefficient)>=0,0,floor(min(coefficient)/0.1)*0.1), ifelse(max(coefficient)<=0,0,ceiling(max(coefficient)/0.1)*0.1)), 
+                    xlab="Covariates", ylab="Expected Coefficient value", main="The expected value of \n each coefficient")
+            par(ask=TRUE)
+            barplot(prob, ylim=c(0,1), xlab="Covariates", ylab="Probability", main="The posterior probability that \n the coefficient is non-zero")
+          }
+)
+
+#' @export
+setMethod("summary","bma", 
+          function(object){
+            return(new("summary.bma", expected.coefficient=object@expected.coeff, posterior.prob=object@posterior.prob))
+          }
+)
