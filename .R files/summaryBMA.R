@@ -1,8 +1,9 @@
-#' Summary the Object of '\code{bma}' Class
+#' Summarize the Object of '\code{bma}' Class
 #' 
 #' This function summarizes an object of '\code{bma}' class
 #' 
 #' @param x An object of '\code{bma}' class
+#' @param ... Arguments to be passed to methods
 #' 
 #' @return An object of '\code{sum.bma}' class with the elements
 #' \item{expected.coefficient}{The expected value of each coefficient}
